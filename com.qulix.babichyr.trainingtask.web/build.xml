@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="com.qulix.babichyr.trainingtask.data" default="clean">
+    <property environment="env"/>
+    <property name="tomcat" value="${env.CATALINA_HOME}"></property>
+    <property name="tomcat.deployment" value="${tomcat}/webapps"></property>
+    <property name="tomcat.bin" value="${tomcat}/bin"/>
+    <property name="base" value="./com.qulix.babichyr.trainingtask.web"/>
+    <property name="lib" value="${base}/lib"/>
+    <property name="source" value="${base}/src/main/java"/>
+    <property name="build" value="${base}/build/classes"/>
+
+    <target name="clean">
+        <delete dir="${tomcat.deployment}/trainingtask" />
+        <delete file="${tomcat.deployment}/trainingtask.war" />
+        <delete file="${base}/trainingtask.war" />
+        <delete file="${base}/trainingtask.war"/>
+        <delete dir="${base}/build"/>
+        <antcall target="makeSource"/>
+    </target>
+
+    <target name="makeSource">
+        <mkdir dir="${base}/build/classes"/>
+        <javac srcdir="${source}" destdir="${build}" classpath="${lib}/servlet-api.jar"/>
+        <antcall target="makeJar"/>
+    </target>
+
+    <target name="makeJar">
+        <jar basedir="${base}/build" destfile="${base}/build/com.qulix.babichyr.trainingtask.data.jar"></jar>
+        <antcall target="makeWar"/>
+    </target>
+
+    <target name="makeWar">
+    <war destfile="${base}/trainingtask.war" webxml="${base}/src/main/webapp/web.xml">
+        <fileset dir="${base}/src/main/webapp/"/>
+        <fileset dir="${base}/src/main/resources"/>
+        <lib dir="${base}/lib"/>
+        <classes dir="${base}/build/classes"/>
+    </war>
+        <antcall target="deploy"/>
+    </target>
+
+    <target name="deploy">
+        <copy file="${base}/trainingtask.war" todir="${tomcat.deployment}"/>
+        <antcall target="start-server"></antcall>
+    </target>
+
+    <target name="start-server">
+        <exec executable="${tomcat.bin}/startup.bat"></exec>
+        <antcall target="start-client"/>
+    </target>
+
+    <target name="stop-server">
+        <exec executable="${tomcat.bin}/shutdown.bat"></exec>
+        <delete dir="${base}/src/main/resources"/>
+	<delete file="${base}/trainingtask.war"/>
+        <copydir src="${tomcat.deployment}/trainingtask/database" dest="${base}/src/main/resources/database"/>
+    </target>
+
+    <target name="start-client">
+        <exec executable="cmd.exe">
+            <arg line="/C start http:/localhost:8080/trainingtask"/>
+        </exec>
+    </target>
+
+</project>

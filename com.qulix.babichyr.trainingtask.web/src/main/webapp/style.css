@@ -1,0 +1,63 @@
+.body {
+    margin: 0 auto;
+    width: 60%;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 14px
+}
+
+.form {
+
+}
+
+.input {
+    width:275px;
+    display:flex;
+    border: 1px solid #999;
+    height: 25px;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+}
+
+.button {
+    height: 25px;
+    width: 80px
+}
+
+.buttonindex {
+    height: 25px;
+    width: 120px
+}
+
+.h2 {
+    font-family: Arial, sans-serif;
+    font-size: 16px
+}
+
+.table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.table td {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    padding: 10px 5px;
+    border-style: solid;
+    border-width: 1px;
+    overflow: hidden;
+    word-break: normal;
+    text-align: center;
+}
+
+.table th {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px 5px;
+    border-style: solid;
+    border-width: 1px;
+    overflow: hidden;
+    word-break: normal;
+    text-align: center;
+    width: auto;
+}
